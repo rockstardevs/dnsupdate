@@ -232,11 +232,7 @@ func updateDNSRecord(domain string, name string, addr string) error {
 func main() {
 	flag.Parse()
 
-	version := versioninfo.Version
-	if versioninfo.DirtyBuild {
-		version = versioninfo.Short()
-	}
-	log.Info(fmt.Sprintf("dnsupdate v%s (built: %s)", version, versioninfo.LastCommit))
+	log.Info(fmt.Sprintf("dnsupdate v(%s) (built: %s)", versioninfo.Short(), versioninfo.LastCommit))
 
 	conf, err := loadConfig(*configFile)
 	if err != nil {
