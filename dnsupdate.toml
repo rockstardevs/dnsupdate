@@ -1,0 +1,10 @@
+authToken = "DIGITALOCEAN_TOKEN"
+
+[hosts.db]
+# This will update from the public ip
+domain = "example.com"
+
+[hosts.web]
+# This will update from the private ip of en0 interface
+interface = "en0"
+domain = "example.com"
