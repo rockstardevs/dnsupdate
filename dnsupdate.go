@@ -14,6 +14,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/carlmjohnson/versioninfo"
 	"github.com/digitalocean/godo"
 	log "github.com/gleich/logoru"
 	"github.com/pkg/errors"
@@ -230,6 +231,12 @@ func updateDNSRecord(domain string, name string, addr string) error {
 }
 func main() {
 	flag.Parse()
+
+	version := versioninfo.Version
+	if versioninfo.DirtyBuild {
+		version = versioninfo.Short()
+	}
+	log.Info(fmt.Sprintf("dnsupdate v%s (built: %s)", version, versioninfo.LastCommit))
 
 	conf, err := loadConfig(*configFile)
 	if err != nil {
