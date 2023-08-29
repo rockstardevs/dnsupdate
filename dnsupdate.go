@@ -10,11 +10,11 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"strings"
 	"syscall"
 	"time"
 
-	"github.com/carlmjohnson/versioninfo"
 	"github.com/digitalocean/godo"
 	log "github.com/gleich/logoru"
 	"github.com/pkg/errors"
@@ -22,6 +22,10 @@ import (
 )
 
 var (
+	buildVersion   = "dev"
+	buildCommit    = "none"
+	buildTimestamp = ""
+
 	configFile     = flag.String("config", "/dnsupdate.toml", "path to configuration file.")
 	updateInterval = flag.Duration("interval", 30*time.Minute, "update interval.")
 
@@ -232,7 +236,11 @@ func updateDNSRecord(domain string, name string, addr string) error {
 func main() {
 	flag.Parse()
 
-	log.Info(fmt.Sprintf("dnsupdate v(%s) (built: %s)", versioninfo.Short(), versioninfo.LastCommit))
+	var timestamp = "unknown"
+	if i, err := strconv.ParseInt(buildTimestamp, 10, 64); err == nil {
+		timestamp = time.Unix(i, 0).Format("Mon Jan 2 15:04:05 MST 2006")
+	}
+	log.Info(fmt.Sprintf("dnsupdate v%s (%s) (built: %s)", buildVersion, buildCommit, timestamp))
 
 	conf, err := loadConfig(*configFile)
 	if err != nil {

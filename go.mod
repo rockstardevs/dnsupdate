@@ -11,7 +11,6 @@ require (
 )
 
 require (
-	github.com/carlmjohnson/versioninfo v0.22.5 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
